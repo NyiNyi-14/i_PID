@@ -3,12 +3,17 @@ import numpy as np
 
 # %% Input shaping
 class InputShaping:
-    def __init__(self, final, initial):
-        # self.t_swich = t_switch
-        self.final = final
-        self.initial = initial
+    def __init__(self, zeta, omega_n):
+        self.zeta = zeta     
+        self.omega_n = omega_n 
+        self._compute_coeff()
 
-    def delay(self, t, t_switch):
-        return self.initial + (self.final - self.initial) * np.heaviside(t - t_switch, 1)
+    def _compute_coeff(self):
+        exp_term = (self.zeta * np.pi) / np.sqrt(1 - self.zeta**2)
+        self.A0 = np.exp(exp_term) / (1 + np.exp(exp_term))
+        self.A1 = 1 - self.A0
+    
+    def delay(self, t, t_switch=0):
+        return self.A0 + self.A1 * np.heaviside(t - t_switch, 1)
 
 # %%

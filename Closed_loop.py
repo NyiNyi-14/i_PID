@@ -30,6 +30,8 @@ class Closed_loop:
             sol = solve_ivp(self.system.ODE, [t, t + dt], state, args=(u,))
             state = sol.y[:, -1]
             states.append(state)
+        
+        self.controller.reset() 
 
         return time, np.array(states)
 

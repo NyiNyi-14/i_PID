@@ -26,5 +26,11 @@ class iPID_controller:
         info = -d_mea + u + d_ref
         iPID = PID + info
         return iPID
+    
+    def reset(self):
+        self.integral = 0
+        self.prev_error = 0
+        self.prev_meas = 0
+        self.prev_ref = 0
 
 # %%
