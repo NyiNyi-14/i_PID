@@ -15,5 +15,10 @@ class InputShaping:
     
     def delay(self, t, t_switch=0):
         return self.A0 + self.A1 * np.heaviside(t - t_switch, 1)
+    
+    def robust_is(self, t, t_switch=0):
+        # return (self.A0 + self.A1 * np.heaviside(t - t_switch, 1))**2
+        return (self.A0**2 + 2 * self.A0 * self.A1 * np.heaviside(t - t_switch, 1) + 
+                 self.A1**2 * np.heaviside(t - 2* t_switch, 1))
 
 # %%
