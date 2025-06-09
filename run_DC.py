@@ -52,6 +52,38 @@ motor_test = DC_motor(motor_params["R"][0],
                  motor_params["B"][0],
                  TL = TL)
 
+# %%
+Kp_tuned = 0.58
+Ki_tuned = 0.21
+Kd_tuned = -0.01
+PID_tuned = PID_controller(Kp_tuned, Ki_tuned, Kd_tuned)
+iPID_tuned = iPID_controller(Kp_tuned, Ki_tuned, Kd_tuned)
+PID_t_loop = Closed_loop(motor_test, PID_tuned)
+iPID_t_loop = Closed_loop(motor_test, iPID_tuned)
+
+time, state_tuned = PID_t_loop.simulate_extra(time, dt, omega_ref, init = init, control_index = 1, extra_args_func = TL)
+time, i_state_tuned = iPID_t_loop.simulate_extra(time, dt, omega_ref, init = init, control_index = 1, extra_args_func = TL)
+
+plt.plot(time, omega_ref * np.ones_like(time), label="Reference Speed (rad/s)")
+plt.plot(time, state_tuned[:, 1], label="PID (rad/s)")
+plt.plot(time, i_state_tuned[:, 1], label="iPID (rad/s)")
+# plt.plot(time, ia_test)
+plt.xlabel("Time (s)")
+plt.ylabel("Motor Speed (rad/s)")
+plt.title("DC Motor PID Control")
+plt.legend()
+plt.grid()
+plt.show()
+
+
+
+
+
+
+
+
+
+# %%
 Kp = 3.33648935332675
 Ki = 0.656107950597057
 Kd = -0.0141651780403183
