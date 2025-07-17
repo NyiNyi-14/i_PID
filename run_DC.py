@@ -37,11 +37,11 @@ omega = 0
 ia = 0
 init = [ia, omega]
 
-dt = 0.01  # Time step
-duration = 100  # Simulation time in seconds
+dt = 0.01  
+duration = 100 
 time = np.arange(0, duration, dt)
-omega_ref = 80.0  # REF speed (rad/s)
-TL = 100 * np.ones_like(time)  # Load torque
+omega_ref = 80.0  
+TL = 100 * np.ones_like(time)  
 TL[:int(duration/dt/1.4)] = 0
 
 motor_test = DC_motor(motor_params["R"][0], 
@@ -75,14 +75,6 @@ plt.legend()
 plt.grid()
 plt.show()
 
-
-
-
-
-
-
-
-
 # %%
 Kp = 3.33648935332675
 Ki = 0.656107950597057
@@ -106,7 +98,6 @@ plt.title("DC Motor PID Control")
 plt.legend()
 plt.grid()
 plt.show()
-
 
 # %% Input shaper design
 zeta = 0.0 # look at MATLAB Root Locus
@@ -139,27 +130,21 @@ else:
 PIDt_switch = np.pi/ (2*np.pi*(1/PIDt_delta) * np.sqrt(1-zeta**2))
 print(f"t_switch: {PIDt_switch:.4f} seconds")
 
-
 # %%
 normal_is = 80 * IS.delay(time, PIDt_switch)
 plt.plot(time, normal_is, label='Input Shaping')
 robust_is = 80 * IS.robust_is(time, PIDt_switch)
 plt.plot(time, robust_is, label='Input Shaping')
 
-# %%
-
-# Suppose `state[:, 1]` is your omega (motor speed) and `time` is your time array
-inverted_signal = -state[:, 1]  # Invert to detect minima
+inverted_signal = -state[:, 1] 
 min_peak_indices, _ = find_peaks(inverted_signal, height=None)
 
-# Get the times and values of those minima
 min_peak_values = state[:, 1][min_peak_indices]
 min_peak_times = time[min_peak_indices]
 
 print("Min peak values:", min_peak_values)
 print("Min peak times:", min_peak_times)
 
-# Example: time difference between two first dips after 70s
 mask = min_peak_times > 70
 min_peaks_after_70 = min_peak_times[mask]
 if len(min_peaks_after_70) >= 2:
@@ -216,18 +201,15 @@ i_robust_is = 80 * IS.robust_is(time, iPIDt_switch)
 plt.plot(time, i_robust_is, label='Input Shaping')
 
 # %%
-# Suppose `state[:, 1]` is your omega (motor speed) and `time` is your time array
-i_inverted_signal = -i_state[:, 1]  # Invert to detect minima
+i_inverted_signal = -i_state[:, 1] 
 i_min_peak_indices, _ = find_peaks(i_inverted_signal, height=None)
 
-# Get the times and values of those minima
 i_min_peak_values = i_state[:, 1][i_min_peak_indices]
 i_min_peak_times = time[i_min_peak_indices]
 
 print("Min peak values:", i_min_peak_values)
 print("Min peak times:", i_min_peak_times)
 
-# Example: time difference between two first dips after 70s
 i_mask = i_min_peak_times > 70
 i_min_peaks_after_70 = i_min_peak_times[i_mask]
 if len(i_min_peaks_after_70) >= 2:
@@ -243,8 +225,6 @@ i_pre = IS.robust_is(time, iPID_Lswitch)
 i_robust_Lis = np.zeros_like(i_pre)
 i_robust_Lis[int(duration/dt/1.4):] = TL[-1] * i_pre[:len(time) - int(duration/dt/1.4)]
 plt.plot(time, i_robust_Lis, label='Load Input Shaping')
-
-
 
 # %%
 time, i_state_is = iPID_loop.simulate_extra(time, dt, i_normal_is, init = init, control_index = 1, extra_args_func = i_normal_Lis)
@@ -304,9 +284,6 @@ plt.tick_params(axis='both', labelsize=20)
 plt.grid()
 plt.tight_layout()
 # plt.savefig('/Users/nyinyia/Documents/13_Paper_mine/02_ACC_iPID/yy.pdf', format='pdf', bbox_inches='tight')# %% Plotting exponential reference signal and position
-
-# plt.ylim(0, 1.6)
-# plt.xlim(0, duration)
 
 plt.figure(figsize=(8, 6))
 for i in range(len(R_vary)):

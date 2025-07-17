@@ -31,9 +31,9 @@ v0 = 0
 init = [x0, v0]
 spring = SpringMassSystem(m, k)
 
-step_ref = np.ones_like(time) # Stepping Reference signal
+step_ref = np.ones_like(time) 
 step_ref[:int(1/dt)] = 0
-exp_ref = 1 - np.exp(-0.5*time) # Exponential Reference signal
+exp_ref = 1 - np.exp(-0.5*time) 
 
 # %% Ziegler–Nichols tuning
 Ku = 1.0
@@ -54,7 +54,6 @@ plt.plot(t, zn_PID[:,0],'c-', label=r'$ x_{\mathrm{PID}} $', linewidth=2)
 plt.plot(t, zn_iPID[:,0],'b-', label=r'$ x_{\mathrm{iPID}} $', linewidth=2)
 plt.xlabel(r"$\mathrm{Time} \ \ \mathrm{[s]}$", fontsize = 20)
 plt.ylabel(r"$\ x \ \ \mathrm{[m]}$", fontsize = 20)
-# plt.ylim(0, step_ref[-1]*1.1)
 plt.xlim(0, duration)
 plt.legend(fontsize = 20)
 plt.tick_params(axis='both', labelsize=20) 
@@ -139,7 +138,6 @@ plt.plot(t, robust_is,'b--', label = r'$ x_{\mathrm{robust\ shaped}}^* $',linewi
 plt.plot(t, PID_robust_is[:,0],'b-', label=r'$ x_{\mathrm{response\ to\ robust\ shaped}} $', linewidth=2)
 plt.xlabel(r"$\mathrm{Time} \ \ \mathrm{[s]}$", fontsize = 20)
 plt.ylabel(r"$\ x \ \ \mathrm{[m]}$", fontsize = 20)
-# plt.ylim(0, step_ref[-1]*1.3)
 plt.xlim(0, duration)
 plt.legend(fontsize = 20)
 plt.tick_params(axis='both', labelsize=20) 
@@ -183,7 +181,6 @@ plt.plot(t, i_robust_is,'b--', label = r'$ x_{\mathrm{robust\ shaped}}^* $',line
 plt.plot(t, iPID_robusts_is[:,0],'b-', label=r'$ x_{\mathrm{response\ to\ robust\ shaped}} $', linewidth=2)
 plt.xlabel(r"$\mathrm{Time} \ \ \mathrm{[s]}$", fontsize = 20)
 plt.ylabel(r"$\ x \ \ \mathrm{[m]}$", fontsize = 20)
-# plt.ylim(0, step_ref[-1]*1.3)
 plt.xlim(0, duration)
 plt.legend(fontsize = 20)
 plt.tick_params(axis='both', labelsize=20) 
@@ -209,7 +206,6 @@ iPIDis_tr, iPIDis_ts, iPIDis_o_s, iPIDis_sse, iPIDis_ae, iPIDis_re = iPIDis_eval
 
 iPIDrobustis_evaluation = PerformanceMetrics(time, i_robust_is)
 iPIDrobustis_tr, iPIDrobustis_ts, iPIDrobustis_o_s, iPIDrobustis_sse, iPIDrobustis_ae, iPIDrobustis_re = iPIDrobustis_evaluation.step_response(iPID_robusts_is[:, 0])
-
 
 table = {
     "Performance Evaluation": ["PID - Step", "PID - IS", "PID - Robust IS", "iPID - Step", "iPID - IS", "iPID - Robust IS"],
@@ -260,48 +256,11 @@ plt.grid()
 plt.tight_layout()
 # plt.savefig('/Users/nyinyia/Documents/13_Paper_mine/02_ACC_iPID/yy.pdf', format='pdf', bbox_inches='tight')# %% Plotting exponential reference signal and position
 
-# plt.ylim(0, 1.6)
-# plt.xlim(0, duration)
-
 plt.figure(figsize=(8, 6))
 for i in range(len(k_vary)):
     plt.plot(time, iPID_state_store[i,:], label = 'k =  ' + str(k_vary[i]))
 
-# %%
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#%%
-# Running the simulation
-
+#%% Running the simulation
 simulation = Closed_loop(spring, PID)
 graph_time = 35
 evaluation_time = np.arange(0, graph_time, dt)  
@@ -339,11 +298,8 @@ plt.tight_layout()
 
 
 # %%
-
 # t, is_states = simulation.simulate(time, dt, ref=is_ref_ro, init = [x0, v0], control_index=0)
-
 t, is_states = simulation.simulate(time, dt, ref=is_ref, init = [x0, v0], control_index=0)
-
 
 # %% 
 plt.figure(figsize=(8, 6))
@@ -358,28 +314,6 @@ plt.tick_params(axis='both', labelsize=12)
 plt.grid()
 plt.tight_layout()
 plt.savefig(r'\Brad\VS Code\Figures\Spring Mass\PID_Spring_is_test.pdf', format='pdf', bbox_inches='tight')
-# %%
-
-# step_evaluation = PerformanceMetrics(evaluation_time, step_ref) 
-# step_tr, step_ts, step_o_s, step_sse, step_ae, step_re = step_evaluation.step_response(step_states[:, 0])
-# exp_evaluation = PerformanceMetrics(evaluation_time, exp_ref)
-# exp_tr, exp_ts, exp_o_s, exp_sse, exp_ae, exp_re = exp_evaluation.step_response(exp_states[:, 0])
-is_evaluation = PerformanceMetrics(evaluation_time, is_ref_ro)
-is_tr, is_ts, is_o_s, is_sse, is_ae, is_re = is_evaluation.step_response(is_states[:, 0])
-
-# %%
-
-table = {
-    "Performance Evaluation": ["PID - Step", "PID - Exponential", "PID - Input Shaping"],
-    "Rise Time (s)": [step_tr, exp_tr, is_tr],
-    "Settling Time (s)": [step_ts, exp_ts, is_ts],
-    "Overshoot (%)": [step_o_s, exp_o_s, is_o_s],
-    "Steady-State Error": [step_sse, exp_sse, is_sse],
-    "Total Absolute Error": [step_ae, exp_ae, is_ae],
-    "Total Relative Error": [step_re, exp_re, is_re],
-
-}
-data_frame = pd.DataFrame(table)
 
 
 # %% Sampling
@@ -392,9 +326,7 @@ stiffness = [0.8, 0.9, 1.0, 1.1, 1.2]
 state_stored = []
 theta_store = np.zeros((len(stiffness), len(time)))
 
-# Reference signal for evaluation
-# select_ref = step_ref
-select_ref = is_ref
+select_ref = step_ref
 
 for i in range(len(stiffness)):
     k_i = stiffness[i]
@@ -403,7 +335,7 @@ for i in range(len(stiffness)):
     PID = PID_controller(Kp, Ki, Kd)
     CL_MC = Closed_loop(pen_LHS, PID)
     time, all_states = CL_MC.simulate(time, dt, select_ref, init = [x0, v0], control_index=0)
-    theta_store[i, :] = all_states.T[0]  # Store theta values
+    theta_store[i, :] = all_states.T[0] 
  
 # %%
 for i in range(len(stiffness)):
@@ -454,29 +386,4 @@ table = {
 }
 data_frame = pd.DataFrame(table)
 
-# %%
-
-import matplotlib.pyplot as plt
-
-# Define 5 blue shades from light to dark
-blue_shades = [
-    "#add8e6",  # Light Blue
-    "#87ceeb",  # Sky Blue
-    "#4682b4",  # Steel Blue
-    "#4169e1",  # Royal Blue
-    "#00008b"   # Dark Blue
-]
-
-# Create a horizontal bar to show the colors
-fig, ax = plt.subplots(figsize=(8, 2))
-for i, color in enumerate(blue_shades):
-    ax.barh(0, 1, left=i, color=color)
-
-ax.set_xlim(0, 5)
-ax.set_yticks([])
-ax.set_xticks(range(5))
-ax.set_xticklabels([f"Shade {i+1}" for i in range(5)])
-ax.set_title("Blue Shades: Light to Dark")
-plt.tight_layout()
-plt.show()
 # %%
