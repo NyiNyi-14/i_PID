@@ -1,6 +1,8 @@
-# Intelligent PID and Input Shaping Modifications to PID Control Systems
+# Intelligent PID Control Augmented with Input Shaping for Precision and Stability in Dynamic Systems
 
 This repostitory contains the code, data, and methods used to analyze the performance of input shaping and an intelligent PID control mechanism, and compare it to that of a similar classical PID. To do this, the code simulates the behavior of these PID systesm, graphs them, and then tabulates multiple quantitative charateristics of their trajectories to compare directly.
+
+*Note: Certain code segments have been omitted due to ongoing manuscript reviews.*
 
 ---
 
