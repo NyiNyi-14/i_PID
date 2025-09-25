@@ -1,4 +1,11 @@
-# Intelligent PID Control Augmented with Input Shaping for Precision and Stability in Dynamic Systems
+# Intelligent PID Control Augmented with Input Shaping for Precision Motion Control in Dynamic Systems
+
+<p align="center">
+  <img src="media/iPID_block.png" width="900">
+</p>
+<p align="center">
+  Fig: Transformation of classical PID control loop into iPID via unknown dynamics elimination with input shaping.
+</p>
 
 This repostitory contains the code, data, and methods used to analyze the performance of input shaping and an intelligent PID control mechanism, and compare it to that of a similar classical PID. To do this, the code simulates the behavior of these PID systesm, graphs them, and then tabulates multiple quantitative charateristics of their trajectories to compare directly.
 
@@ -8,15 +15,15 @@ This repostitory contains the code, data, and methods used to analyze the perfor
 
 ## Project Structure
 
-   - 'SpringMassSystem.py' - Characteristics and differential equation of the spring mass system.
-   - 'DC_Motor.py' - Characteristics and differential equation of the DC motor.
-   - 'PID_controller.py' - Characteristics and PID calculation of PID controller.
-   - 'iPID_controller.py' - Characteristics and modified PID calculation of iPID controller.
-   - 'Closed_loop.py' - Runs simulation by solving the differential equation incorporating both system and controller in a loop that lasts a specified duration.
-   - 'PerformanceMetrics.py' - Calculates the quantitave properties of system trajectories.
+   - `SpringMassSystem.py` - Characteristics and differential equation of the spring mass system.
+   - `DC_Motor.py` - Characteristics and differential equation of the DC motor.
+   <!-- - 'PID_controller.py' - Characteristics and PID calculation of PID controller. -->
+   <!-- - 'iPID_controller.py' - Characteristics and modified PID calculation of iPID controller. -->
+   <!-- - 'Closed_loop.py' - Runs simulation by solving the differential equation incorporating both system and controller in a loop that lasts a specified duration. -->
+   <!-- - 'PerformanceMetrics.py' - Calculates the quantitave properties of system trajectories. -->
 
-   - 'run_SpringMass.py' - Runs PID and iPID simulations for spring-mass system, creates associated graphs and tables.
-   - 'run_DC.py' - Runs PID and iPID simulations for DC motor system, creates associated graphs and tables.
+   - `run_SpringMass.py` – Simulates PID and iPID closed-loop control of a spring–mass system; generates plots and tables.  
+   - `run_DC.py` – Simulates PID and iPID closed-loop control of a DC motor system; generates plots and tables.  
 
 ---
 
@@ -51,19 +58,19 @@ Make sure all scripts are in the same directory.
 
 ### Step 2: Specifications
 
-Before running the code, change all input values to match the simulation specifications:
- - System values (m, k, R, L, Kb, Kt, J, B)
- - Controller Tuning (Kp, Ki, Kd)
- - Initial Conditions (x0, v0, omega, ia)
- - Time Steps (duration, dt)
+ Before running the code, update the system and controller parameters to simulate your own setup.
+- System parameters: (m, k, R, L, Kb, Kt, J, B)  
+- Controller tuning: (Kp, Ki, Kd)  
+- Initial conditions: (x0, v0, ω, ia)  
+- Simulation settings: (duration, dt)  
 
 <!-- In the run_DC.py script, select the reference signal and data to evaluate in the tables, as described in the comment on lines 458-459, and lines 493-494. -->
 
-Set the appropriate output paths for the extracted graphs to save them in the correct locations.
+Set the appropriate output paths to ensure graphs are saved in the desired locations.  
 
 ### Step 3: Generate Figures and Tables
 
-Run the main scripts to run simulations and create figures.
+Run the main scripts to perform simulations and automatically generate figures.  
 
 ```bash
 python run_SpringMass.py
@@ -73,12 +80,11 @@ python run_SpringMass.py
 python run_DC.py
 ```
 
-- These scripts will simulate the dynamic systems under PID and iPID control with aggressive stepping, exponential, normal input shaped, and robust input shaped references.
+- These scripts simulate dynamic systems under PID and iPID control with various reference inputs: aggressive step, exponential, normal input shaping, and robust input shaping.  
 
 ---
 
-## Outputs
-
+## Results
 
 ![Sample Frame](media/Step_Graphs.png)
 
