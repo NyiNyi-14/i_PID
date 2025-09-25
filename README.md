@@ -124,6 +124,11 @@ python run_DC.py
 
 - Quantitative evaluation of performance of DC motor system with uncertain resistance and input shaped reference.
 
+ ![Sample Frame](media/robustness.png)
+
+- Performance of iPID reference tracking with and without robust input shaping under a 10 ms delay:  
+    - (a) σ = 0.5, (b)** σ = 1, (c) σ = 2, (d) σ = 10  
+
 ---
 
 ## Related Work
@@ -139,6 +144,9 @@ This project builds on developed control mechanisms, including:
 ## Citation
 
 If you use this work, please cite the related paper as follows:
+```bash
+
+```
 <!-- 
 ---
 
